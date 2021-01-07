@@ -100,11 +100,16 @@ class Transformer(Formatter):
             Formatted timestamp.
         """
         timestamp = Formatter.format_timestamp(self.data["date_created"])
+        logger.debug(f"Using timestamp from the job {timestamp}.")
 
         if self.data["meta"]["env"]["env_name"] == "jenkins":
 
             ci_id = self.data["meta"]["env"]["ci_id"]
             ci_name = self.data["meta"]["env"]["ci_name"]
+
+            # Make sure the job ran in Jenkins, i.e has valid ci_id and ci_name
+            if ci_id == "unknown" or ci_name == "unknown":
+                return timestamp
 
             # Get timestamp from Jenkins
             jenkins_url = (
@@ -125,6 +130,7 @@ class Transformer(Formatter):
 
             date_created = r.json()["date_created"]
             timestamp = Formatter.format_timestamp(date_created)
+            logger.debug(f"Using timestamp from Jenkins {timestamp}.")
 
         return timestamp
 
