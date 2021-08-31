@@ -27,7 +27,7 @@ Development workflow
 
 .. code-block::
 
- virtualenv venv -p python3
+ python3 -m venv venv
 
 Activate the Flask app and set development mode in your environment
 
@@ -39,16 +39,15 @@ Activate the Flask app and set development mode in your environment
  source venv/bin/activate
  make update
 
-3. Initialize local instances of MySQL, Redis, InfluxDB and Chronograf for development/testing
+3. Run the app locally
+
+To run the app locally you need a local instances of MySQL, Redis, InfluxDB and Chronograf, which are set up through docker-compose.
 
 .. code-block::
 
  docker-compose up
 
-
 The SQuaSH API requires the `AWS credentials present in the environment <https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html>`_. It also assumes that the `s3://squash-dev.data/` S3 bucket was previously created.
-
-4. Run the app locally
 
 Note that by default the app will run using the development config profile, which is equivalent to do:
 
@@ -67,10 +66,19 @@ On another terminal start the Celery worker:
  celery -A squash.tasks -E -l DEBUG worker
 
 
-5. Run tests
+Running tests
+-------------
+
+Pytest uses the docker-compose setup to run functional tests:
 
 .. code-block::
 
  tox -e pytest
+
+To run unit tests only, you can skip the docker-compose using a ``pytest`` marker:
+
+.. code-block::
+
+ pytest -m "unit"
 
 You can also exercise the API running the `test API notebook <https://github.com/lsst-sqre/squash-rest-api/blob/master/tests/test_api.ipynb>`_.
