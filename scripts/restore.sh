@@ -18,7 +18,7 @@ then
   echo "Copying files to $pod pod"
   kubectl cp $dir $namespace/$pod:$dir
 
-  echo "Restoring $database database"
+  echo "Restoring $namespace database"
   kubectl exec -it -n $namespace $pod -- influxd \
   restore -portable $dir
 fi
