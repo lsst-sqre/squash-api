@@ -228,20 +228,25 @@ class Transformer(Formatter):
         for meas in self.data["measurements"]:
             # DM-18360 - SQuaSH API/measurements should return the verification
             # package
-            package = meas["metric"].split(".")[0]
+            # a metric fqn is <package>.<metric>, extract package name from the
+            # metric fqn
+            package = None
+            if "." in meas["metric"]:
+                package = meas["metric"].split(".")[0]
 
-            # No need to carry the package name prefix in the metric name.
-            metric = meas["metric"].split(".")[1]
-            value = meas["value"]
+            if package:
+                # No need to carry the package name prefix in the metric name.
+                if meas["metric"].startswith(package):
+                    metric = meas["metric"][len(package) + 1 :]
 
-            if package not in meas_by_package:
-                meas_by_package[package] = []
-
-            # InfluxDB does not store NaNs and it is safe to just skip
-            # values that are NaN.
-            # https://github.com/influxdata/influxdb/issues/4089
-            if not math.isnan(value):
-                meas_by_package[package].append(f"{metric}={value}")
+                value = meas["value"]
+                # InfluxDB does not store NaNs and it is safe to just skip
+                # values that are NaN.
+                # https://github.com/influxdata/influxdb/issues/4089
+                if not math.isnan(value):
+                    if package not in meas_by_package:
+                        meas_by_package[package] = []
+                    meas_by_package[package].append(f"{metric}={value}")
 
         return meas_by_package
 
