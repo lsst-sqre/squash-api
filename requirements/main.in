@@ -5,17 +5,17 @@
 # After editing, update requirements/main.txt by running:
 #     make update-deps
 
-jinja2==2.11.2
-aiofiles==0.5.0
-flask-restful==0.3.8
-flask-jwt==0.3.2
-flask-sqlalchemy==2.4.4
-requests==2.25.0
-pymysql==0.10.1
-jsonschema==3.2.0
-flasgger==0.9.5
-numpy==1.19.2
-uWSGI==2.0.19.1
-click==7.1.2
-boto3==1.16.19
-celery[redis]==4.4.7
+jinja2
+aiofiles
+flask-restful
+flask-jwt
+flask-sqlalchemy
+requests
+pymysql
+jsonschema
+flasgger
+numpy
+uWSGI
+click
+boto3
+celery[redis]
