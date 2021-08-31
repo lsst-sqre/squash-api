@@ -6,7 +6,6 @@ import pymysql
 import pytest
 import redis
 
-from squash.app import create_app
 from squash.config import Development
 from squash.models import UserModel
 
@@ -78,6 +77,8 @@ def new_user():
 @pytest.fixture(scope="module")
 def test_client(ensure_redis_service, ensure_mysql_service):
     """Create an app for testing."""
+    from squash.app import create_app
+
     app = create_app("squash.config.Testing")
     # Flask provides a way to test your application by exposing the Werkzeug
     # test Client and handling the context locals for you.
