@@ -31,7 +31,7 @@ Use the output directory of the dump command as input for the restore command:
 Copy Chronograf and Kapacitor context databases
 ===============================================
 
-The Chronograf context database store Chronograf dashboard definitions, Chronograf users and Chronograf organizations data.
+The Chronograf context database stores Chronograf dashboard definitions, Chronograf users and Chronograf organizations data.
 The Kapacitor context database stores the Alert Rules and TICKscripts.
 
 Use the ``contextdb.sh`` script to copy the context database files from a running Chronograf or Kapacitor instance.
