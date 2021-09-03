@@ -58,6 +58,9 @@ ENV PATH="/opt/venv/bin:$PATH"
 # Copy the virtualenv
 COPY --from=install-image /opt/venv /opt/venv
 
+# Copy initialization script (used with docker-compose)
+COPY scripts/wait-for-it.sh ./
+
 # Copy uwsgi configuration file
 COPY uwsgi.ini ./
 
