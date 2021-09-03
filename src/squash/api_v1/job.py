@@ -318,31 +318,30 @@ class Job(Resource):
 
             if metric:
                 m = MeasurementModel(job_id, metric.id, **measurement)
+                # Insert data blobs associated with this measurement
+                blobs = self.data["blobs"]
+                m.blobs = []
+
+                for blob in blobs:
+                    if blob and "identifier" in blob and "name" in blob:
+                        identifier = blob["identifier"]
+                        if identifier in measurement["blob_refs"]:
+                            name = blob["name"]
+                            b = BlobModel(identifier, name)
+                            m.blobs.append(b)
+
+                try:
+                    m.save_to_db()
+                except Exception:
+                    raise ApiError(
+                        "An error occurred inserting " "measurements", 500
+                    )
+
             else:
                 warnings.warn(
                     "Metric `{}` not found, it looks like "
                     "the metrics definition is out of "
                     "date.".format(metric_name)
-                )
-
-            # Insert data blobs associated with this measurement
-            blobs = self.data["blobs"]
-
-            m.blobs = []
-
-            for blob in blobs:
-                if blob and "identifier" in blob and "name" in blob:
-                    identifier = blob["identifier"]
-                    if identifier in measurement["blob_refs"]:
-                        name = blob["name"]
-                        b = BlobModel(identifier, name)
-                        m.blobs.append(b)
-
-            try:
-                m.save_to_db()
-            except Exception:
-                raise ApiError(
-                    "An error occurred inserting " "measurements", 500
                 )
 
     @time_this
