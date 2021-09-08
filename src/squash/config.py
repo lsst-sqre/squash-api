@@ -18,6 +18,14 @@ class Config(object):
     SQUASH_DB_USER = os.environ.get("SQUASH_DB_USER", "root")
     SQUASH_DB_PASSWORD = os.environ.get("SQUASH_DB_PASSWORD", "squash")
 
+    # Default database uri connection string
+    SQLALCHEMY_DATABASE_URI = os.environ.get(
+        "SQLALCHEMY_DATABASE_URI",
+        "mysql+pymysql://{}:{}@127.0.0.1/squash_local".format(
+            SQUASH_DB_USER, SQUASH_DB_PASSWORD
+        ),
+    )
+
     # Default API user credentials
     DEFAULT_USER = os.environ.get("SQUASH_DEFAULT_USER", "mole")
     DEFAULT_PASSWORD = os.environ.get("SQUASH_DEFAULT_PASSWORD", "desert")
@@ -59,8 +67,11 @@ class Production(Config):
 
     # Because the cloudsql-proxy containter runs in the same pod as the app,
     # it appears to the application as localhost
-    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://{}:{}@127.0.0.1/squash".format(
-        Config.SQUASH_DB_USER, Config.SQUASH_DB_PASSWORD
+    SQLALCHEMY_DATABASE_URI = os.environ.get(
+        "SQLALCHEMY_DATABASE_URI",
+        "mysql+pymysql://{}:{}@127.0.0.1/squash".format(
+            Config.SQUASH_DB_USER, Config.SQUASH_DB_PASSWORD
+        ),
     )
 
     DEBUG = False
@@ -73,12 +84,6 @@ class Production(Config):
 
 class Development(Config):
     """Development configuration."""
-
-    SQLALCHEMY_DATABASE_URI = (
-        "mysql+pymysql://{}:{}@127.0.0.1/squash_local".format(
-            Config.SQUASH_DB_USER, Config.SQUASH_DB_PASSWORD
-        )
-    )
 
     SQLALCHEMY_ECHO = True
 
@@ -93,11 +98,5 @@ class Testing(Config):
     # handling so that you get better error reports when performing test
     # requests against the application.
     TESTING = True
-
-    SQLALCHEMY_DATABASE_URI = (
-        "mysql+pymysql://{}:{}@127.0.0.1/squash_local".format(
-            Config.SQUASH_DB_USER, Config.SQUASH_DB_PASSWORD
-        )
-    )
 
     SQLALCHEMY_ECHO = True
