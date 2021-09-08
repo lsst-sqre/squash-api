@@ -14,7 +14,7 @@
 #   - Runs a non-root user.
 #   - Sets up the entrypoint and port.
 
-FROM python:3.9.2-buster AS base-image
+FROM python:3.9.7-buster AS base-image
 LABEL maintainer "afausti@lsst.org"
 
 # Update system packages
