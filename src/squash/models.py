@@ -3,7 +3,6 @@
 import os
 from datetime import datetime
 
-import numpy as np
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.mysql import JSON, TIMESTAMP
 from sqlalchemy.ext.compiler import compiles
@@ -472,7 +471,7 @@ class MeasurementModel(db.Model):
         self,
         job_id,
         metric_id,
-        value=0,
+        value=None,
         unit=None,
         metric="",
         identifier=None,
@@ -481,12 +480,6 @@ class MeasurementModel(db.Model):
 
         self.job_id = job_id
         self.metric_id = metric_id
-
-        # FIX: review this
-        # handle nan in measurement values
-        if np.isnan(float(value)):
-            value = 0
-
         self.value = value
         self.metric_name = metric
         self.unit = unit
