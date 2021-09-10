@@ -472,7 +472,7 @@ class MeasurementModel(db.Model):
         job_id,
         metric_id,
         value=None,
-        unit=None,
+        unit="",
         metric="",
         identifier=None,
         blob_refs=None,
