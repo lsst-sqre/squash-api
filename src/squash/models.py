@@ -480,8 +480,15 @@ class MeasurementModel(db.Model):
 
         self.job_id = job_id
         self.metric_id = metric_id
+
+        if value is None:
+            value = null()
         self.value = value
+
         self.metric_name = metric
+
+        if unit is None:
+            unit = ""
         self.unit = unit
 
     def json(self):
