@@ -6,7 +6,7 @@ from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.mysql import JSON, TIMESTAMP
 from sqlalchemy.ext.compiler import compiles
-from sqlalchemy.sql import expression
+from sqlalchemy.sql import expression, null
 from werkzeug.security import check_password_hash, generate_password_hash
 
 SQUASH_ETL_MODE = os.environ.get("SQUASH_ETL_MODE", False)
@@ -471,7 +471,7 @@ class MeasurementModel(db.Model):
         self,
         job_id,
         metric_id,
-        value=None,
+        value=null(),
         unit="",
         metric="",
         identifier=None,
