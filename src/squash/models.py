@@ -3,11 +3,10 @@
 import os
 from datetime import datetime
 
-import numpy as np
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects.mysql import JSON, TIMESTAMP
 from sqlalchemy.ext.compiler import compiles
-from sqlalchemy.sql import expression
+from sqlalchemy.sql import expression, null
 from werkzeug.security import check_password_hash, generate_password_hash
 
 SQUASH_ETL_MODE = os.environ.get("SQUASH_ETL_MODE", False)
@@ -472,8 +471,8 @@ class MeasurementModel(db.Model):
         self,
         job_id,
         metric_id,
-        value=0,
-        unit=None,
+        value=null(),
+        unit="",
         metric="",
         identifier=None,
         blob_refs=None,
@@ -482,13 +481,14 @@ class MeasurementModel(db.Model):
         self.job_id = job_id
         self.metric_id = metric_id
 
-        # FIX: review this
-        # handle nan in measurement values
-        if np.isnan(float(value)):
-            value = 0
-
+        if value is None:
+            value = null()
         self.value = value
+
         self.metric_name = metric
+
+        if unit is None:
+            unit = ""
         self.unit = unit
 
     def json(self):
