@@ -1,5 +1,4 @@
 import os
-import numpy as np
 from datetime import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -7,7 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 # https://jira.lsstcorp.org/browse/DM-12191
 from sqlalchemy.dialects.mysql import JSON
 from sqlalchemy.dialects.mysql import TIMESTAMP
-from sqlalchemy.sql import expression
+from sqlalchemy.sql import expression, null
 from sqlalchemy.ext.compiler import compiles
 
 from .db import db
@@ -388,19 +387,20 @@ class MeasurementModel(db.Model):
     blobs = db.relationship('BlobModel', secondary=measurement_blob,
                             lazy='dynamic')
 
-    def __init__(self, job_id, metric_id, value=0, unit=None,
+    def __init__(self, job_id, metric_id, value=null(), unit="",
                  metric='', identifier=None, blob_refs=None):
 
         self.job_id = job_id
         self.metric_id = metric_id
 
-        # FIX: review this
-        # handle nan in measurement values
-        if np.isnan(float(value)):
-            value = 0
-
+        if value is None:
+            value = null()
         self.value = value
+
         self.metric_name = metric
+
+        if unit is None:
+            unit = ""
         self.unit = unit
 
     def json(self):
