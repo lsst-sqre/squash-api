@@ -86,21 +86,25 @@ def upload_object(
         The secret key for your AWS account.
 
     """
-    s3 = boto3.resource("s3")
+    s3_uri = ""
+    if S3_BUCKET:
 
-    object = s3.Object(S3_BUCKET, key)
+        s3 = boto3.resource("s3")
 
-    args = {}
+        object = s3.Object(S3_BUCKET, key)
 
-    if metadata is not None:
-        args["Metadata"] = metadata
-    if acl is not None:
-        args["ACL"] = acl
-    if content_type is not None:
-        args["ContentType"] = content_type
+        args = {}
 
-    self.update_state(state="STARTED")
-    object.put(Body=body, **args)
+        if metadata is not None:
+            args["Metadata"] = metadata
+        if acl is not None:
+            args["ACL"] = acl
+        if content_type is not None:
+            args["ContentType"] = content_type
 
-    s3_uri = get_s3_uri(key)
+        self.update_state(state="STARTED")
+        object.put(Body=body, **args)
+
+        s3_uri = get_s3_uri(key)
+
     return s3_uri
