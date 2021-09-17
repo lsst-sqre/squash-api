@@ -133,11 +133,8 @@ def job_to_influxdb(self, job_id):
         400: Malformed syntax or bad query
         401: Unathenticated request.
     """
-    influxdb_api_url = f"http://{config.INFLUXDB_API_URL}"
-    squash_api_url = f"http://{config.SQUASH_API_URL}"
-
     status_code = create_influxdb_database(
-        config.INFLUXDB_DATABASE, influxdb_api_url
+        config.INFLUXDB_DATABASE, config.INFLUXDB_API_URL
     )
 
     if status_code != 200:
@@ -145,7 +142,7 @@ def job_to_influxdb(self, job_id):
         return message, status_code
 
     # Get job data from the SQuaSH API
-    job_url = f"{squash_api_url}/job/{job_id}"
+    job_url = f"{config.SQUASH_API_URL}/job/{job_id}"
     try:
         r = requests.get(url=job_url)
         r.raise_for_status()
@@ -163,13 +160,13 @@ def job_to_influxdb(self, job_id):
         return message, status_code
 
     data = r.json()
-    transformer = Transformer(squash_api_url=squash_api_url, data=data)
+    transformer = Transformer(squash_api_url=config.SQUASH_API_URL, data=data)
 
     influxdb_lines = transformer.to_influxdb_line()
 
     for line in influxdb_lines:
         status_code = write_influxdb_line(
-            line, config.INFLUXDB_DATABASE, influxdb_api_url
+            line, config.INFLUXDB_DATABASE, config.INFLUXDB_API_URL
         )
 
         if status_code != 204:
