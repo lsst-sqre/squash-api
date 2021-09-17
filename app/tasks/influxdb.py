@@ -1,5 +1,5 @@
 import os
-import math
+import numpy as np
 import requests
 from pytz import UTC
 from datetime import datetime
@@ -117,7 +117,8 @@ def job_to_influxdb(self, job_id, date_created, data):
         if influxdb_measurement not in fields:
             fields[influxdb_measurement] = []
 
-        if not math.isnan(meas['value']):
+        # Skip None, np.nan and np.inf values
+        if meas['value'] is not None and np.isfinite(meas['value']):
             fields[influxdb_measurement].append("{}={}".format(meas['metric'],
                                                                meas['value']))
 
