@@ -11,7 +11,7 @@ attrs==21.2.0 \
     #   jsonschema
     #   pytest
     #   pytest-docker
-backports.entry-points-selectable==1.1.0 \
+backports-entry-points-selectable==1.1.0 \
     --hash=sha256:988468260ec1c196dab6ae1149260e2f5472c9110334e5d51adcb77867361f6a \
     --hash=sha256:a6d9a871cde5e15b4c4a53e3d43ba890cc6861ec1332c9c2428c92f977192acc
     # via virtualenv
@@ -139,7 +139,7 @@ coverage[toml]==5.5 \
     --hash=sha256:f030f8873312a16414c0d8e1a1ddff2d3235655a2174e3648b4fa66b3f2f1079 \
     --hash=sha256:f0b278ce10936db1a37e6954e15a3730bea96a0997c26d7fee88e6c396c2086d \
     --hash=sha256:f11642dddbb0253cc8853254301b51390ba0081750a8ac03f20ea8103f0c56b6
-    # via -r requirements/dev.in
+    # via -r dev.in
 cryptography==3.4.8 \
     --hash=sha256:0a7dcbcd3f1913f664aca35d47c1331fce738d44ec34b7be8b9d332151b0b01e \
     --hash=sha256:1eb7bb0df6f6f583dd8e054689def236255161ebbcf62b226454ab9ec663746b \
@@ -175,7 +175,7 @@ docker-compose==1.29.2 \
     --hash=sha256:4c8cd9d21d237412793d18bd33110049ee9af8dab3fe2c213bbd0733959b09b7 \
     --hash=sha256:8d5589373b35c8d3b1c8c1182c6e4a4ff14bffa3dd0b605fcd08f73c94cef809
     # via
-    #   -r requirements/dev.in
+    #   -r dev.in
     #   pytest-docker
 dockerpty==0.4.1 \
     --hash=sha256:69a9d69d573a0daa31bcd1c0774eeed5c15c295fe719c61aca550ed1393156ce
@@ -191,12 +191,12 @@ flake8==3.9.2 \
     --hash=sha256:07528381786f2a6237b061f6e96610a4167b226cb926e2aa2b6b1d78057c576b \
     --hash=sha256:bf8fd333346d844f616e8d47905ef3a3384edae6b4e9beb0c5101e25e3110907
     # via
-    #   -r requirements/dev.in
+    #   -r dev.in
     #   flake8-docstrings
 flake8-docstrings==1.6.0 \
     --hash=sha256:99cac583d6c7e32dd28bbfbef120a7c0d1b6dde4adb5a9fd441c4227a6534bde \
     --hash=sha256:9fe7c6a306064af8e62a055c2f61e9eb1da55f84bb39caef2b84ce53708ac34b
-    # via -r requirements/dev.in
+    # via -r dev.in
 identify==2.2.13 \
     --hash=sha256:7199679b5be13a6b40e6e19ea473e789b11b4e3b60986499b1f589ffb03c217c \
     --hash=sha256:7bc6e829392bd017236531963d2d937d66fc27cadc643ac0aba2ce9f26157c79
@@ -241,7 +241,7 @@ mypy==0.910 \
     --hash=sha256:ec4e0cd079db280b6bdabdc807047ff3e199f334050db5cbb91ba3e959a67504 \
     --hash=sha256:ecd2c3fe726758037234c93df7e98deb257fd15c24c9180dacf1ef829da5f921 \
     --hash=sha256:ef565033fa5a958e62796867b1df10c40263ea9ded87164d67572834e57a174d
-    # via -r requirements/dev.in
+    # via -r dev.in
 mypy-extensions==0.4.3 \
     --hash=sha256:090fedd75945a69ae91ce1303b5824f428daf5a028d2f6ab8a299250a846f15d \
     --hash=sha256:2d82818f5bb3e369420cb3c4060a7970edba416647068eb4c5343488a6c604a8
@@ -254,9 +254,9 @@ packaging==21.0 \
     --hash=sha256:7dc96269f53a4ccec5c0670940a4281106dd0bb343f47b7471f779df49c2fbe7 \
     --hash=sha256:c86254f9220d55e31cc94d69bade760f0847da8000def4dfe1c6b872fd14ff14
     # via pytest
-paramiko==2.7.2 \
-    --hash=sha256:4f3e316fef2ac628b05097a637af35685183111d4bc1b5979bd397c2ab7b5898 \
-    --hash=sha256:7f36f4ba2c0d81d219f4595e35f70d56cc94f9ac40a6acdf51d6ca210ce65035
+paramiko==2.10.1 \
+    --hash=sha256:443f4da23ec24e9a9c0ea54017829c282abdda1d57110bf229360775ccd27a31 \
+    --hash=sha256:f6cbd3e1204abfdbcd40b3ecbc9d32f04027cd3080fe666245e21e7540ccfc1b
     # via docker
 platformdirs==2.3.0 \
     --hash=sha256:15b056538719b1c94bdaccb29e5f81879c7f7f0f4a153f46086d155dffcd4f0f \
@@ -269,7 +269,7 @@ pluggy==1.0.0 \
 pre-commit==2.14.1 \
     --hash=sha256:7977a3103927932d4823178cbe4719ab55bb336f42a9f3bb2776cff99007a117 \
     --hash=sha256:a22d12a02da4d8df314187dfe7a61bda6291d57992060522feed30c8cd658b68
-    # via -r requirements/dev.in
+    # via -r dev.in
 py==1.10.0 \
     --hash=sha256:21b81bda15b66ef5e1a777a21c4dcd9c20ad3efd0b3f817e7a809035269e1bd3 \
     --hash=sha256:3b80836aa6d1feeaa108e046da6423ab8f6ceda6468545ae8d02d9d58d18818a
@@ -341,12 +341,12 @@ pytest==6.2.5 \
     --hash=sha256:131b36680866a76e6781d13f101efb86cf674ebb9762eb70d3082b6f29889e89 \
     --hash=sha256:7310f8d27bc79ced999e760ca304d69f6ba6c6649c0b60fb0e04a4a77cacc134
     # via
-    #   -r requirements/dev.in
+    #   -r dev.in
     #   pytest-docker
 pytest-docker==0.10.3 \
     --hash=sha256:292d23c5a1745aaa71b23edc24f410e9c4b1f52cb1ead859c923bd4438bac3b8 \
     --hash=sha256:29a6a316508b0601f0085fbc45c9a54c7169f7213cac9ff906658186e3bcca23
-    # via -r requirements/dev.in
+    # via -r dev.in
 python-dotenv==0.19.0 \
     --hash=sha256:aae25dc1ebe97c420f50b81fb0e5c949659af713f31fdb63c749ca68748f34b1 \
     --hash=sha256:f521bc2ac9a8e03c736f62911605c5d83970021e3fa95b37d769e2bbbe9b6172
@@ -397,6 +397,7 @@ six==1.16.0 \
     #   bcrypt
     #   dockerpty
     #   jsonschema
+    #   paramiko
     #   pynacl
     #   virtualenv
     #   websocket-client
