@@ -7,7 +7,7 @@
 aiofiles==0.7.0 \
     --hash=sha256:a1c4fc9b2ff81568c83e21392a82f344ea9d23da906e4f6a52662764545e19d4 \
     --hash=sha256:c67a6823b5f23fcab0a2595a289cec7d8c863ffcb4322fb8cd6b90400aedfdbc
-    # via -r requirements/main.in
+    # via -r main.in
 amqp==5.0.6 \
     --hash=sha256:03e16e94f2b34c31f8bf1206d8ddd3ccaa4c315f7f6a1879b7b1210d229568c2 \
     --hash=sha256:493a2ac6788ce270a2f6a765b017299f60c1998f5a8617908ee9be082f7300fb
@@ -27,7 +27,7 @@ billiard==3.6.4.0 \
 boto3==1.18.33 \
     --hash=sha256:461f659c06f9f56693cebbca70b11866f096021eafbd949a3c029c3a8adee6a4 \
     --hash=sha256:596d2afda27ae3d9a10112a475aa25c4d6b5cf023919e370ad8e6c6ae04d57a6
-    # via -r requirements/main.in
+    # via -r main.in
 botocore==1.21.33 \
     --hash=sha256:204327b9a33e3ae5207ff9acdd7d3b6d1f99f5dc9165a4d843d6f1a566f3006c \
     --hash=sha256:b321b570a0da4c6280e737d817c8f740bce0ef914f564e1c27246c7ae76b4c31
@@ -37,7 +37,7 @@ botocore==1.21.33 \
 celery[redis]==5.1.2 \
     --hash=sha256:8d9a3de9162965e97f8e8cc584c67aad83b3f7a267584fa47701ed11c3e0d4b0 \
     --hash=sha256:9dab2170b4038f7bf10ef2861dbf486ddf1d20592290a1040f7b7a1259705d42
-    # via -r requirements/main.in
+    # via -r main.in
 certifi==2021.5.30 \
     --hash=sha256:2bbf76fd432960138b3ef6dda3dde0544f27cbf8546c458e60baf371917ba9ee \
     --hash=sha256:50b1e4f8446b06f41be7dd6338db18e0990601dce795c2b1686458aa7e8fa7d8
@@ -50,7 +50,7 @@ click==7.1.2 \
     --hash=sha256:d2b5255c7c6349bc1bd1e59e08cd12acbbd63ce649f2588755783aa94dfb6b1a \
     --hash=sha256:dacca89f4bfadd5de3d7489b7c8a566eee0d3676333fbb50030263894c38c0dc
     # via
-    #   -r requirements/main.in
+    #   -r main.in
     #   celery
     #   click-didyoumean
     #   click-plugins
@@ -70,7 +70,7 @@ click-repl==0.2.0 \
 flasgger==0.9.5 \
     --hash=sha256:0603941cf4003626b4ee551ca87331f1d17b8eecce500ccf1a1f1d3a332fc94a \
     --hash=sha256:6ebea406b5beecd77e8da42550f380d4d05a6107bc90b69ce9e77aee7612e2d0
-    # via -r requirements/main.in
+    # via -r main.in
 flask==2.0.1 \
     --hash=sha256:1c4c257b1892aec1398784c63791cbaa43062f1f7aeb555c4da961b20ee68f55 \
     --hash=sha256:a6209ca15eb63fc9385f38e452704113d679511d9574d09b2cf9183ae7d20dc9
@@ -81,15 +81,15 @@ flask==2.0.1 \
     #   flask-sqlalchemy
 flask-jwt==0.3.2 \
     --hash=sha256:49c0672fbde0f1cd3374bd834918d28956e3c521c7e00089cdc5380d323bd0ad
-    # via -r requirements/main.in
+    # via -r main.in
 flask-restful==0.3.9 \
     --hash=sha256:4970c49b6488e46c520b325f54833374dc2b98e211f1b272bd4b0c516232afe2 \
     --hash=sha256:ccec650b835d48192138c85329ae03735e6ced58e9b2d9c2146d6c84c06fa53e
-    # via -r requirements/main.in
+    # via -r main.in
 flask-sqlalchemy==2.5.1 \
     --hash=sha256:2bda44b43e7cacb15d4e05ff3cc1f8bc97936cc464623424102bfc2c35e95912 \
     --hash=sha256:f12c3d4cc5cc7fdcc148b9527ea05671718c3ea45d50c7e732cceb33f574b390
-    # via -r requirements/main.in
+    # via -r main.in
 greenlet==1.1.1 \
     --hash=sha256:04e1849c88aa56584d4a0a6e36af5ec7cc37993fdc1fda72b56aa1394a92ded3 \
     --hash=sha256:05e72db813c28906cdc59bd0da7c325d9b82aa0b0543014059c34c8c4ad20e16 \
@@ -154,7 +154,7 @@ jinja2==3.0.1 \
     --hash=sha256:1f06f2da51e7b56b8f238affdd6b4e2c61e39598a378cc49345bc1bd42a978a4 \
     --hash=sha256:703f484b47a6af502e743c9122595cc812b0271f661722403114f71a79d0f5a4
     # via
-    #   -r requirements/main.in
+    #   -r main.in
     #   flask
 jmespath==0.10.0 \
     --hash=sha256:b85d0567b8666149a93172712e68920734333c0ce7e89b78b3e987f71e5ed4f9 \
@@ -166,7 +166,7 @@ jsonschema==3.2.0 \
     --hash=sha256:4e5b3cf8216f577bee9ce139cbe72eca3ea4f292ec60928ff24758ce626cd163 \
     --hash=sha256:c8a85b28d377cc7737e46e2d9f2b4f44ee3c0e1deac6bf46ddefc7187d30797a
     # via
-    #   -r requirements/main.in
+    #   -r main.in
     #   flasgger
 kombu==5.1.0 \
     --hash=sha256:01481d99f4606f6939cdc9b637264ed353ee9e3e4f62cfb582324142c41a572d \
@@ -228,9 +228,9 @@ markupsafe==2.0.1 \
     --hash=sha256:f9081981fe268bd86831e5c75f7de206ef275defcb82bc70740ae6dc507aee51 \
     --hash=sha256:fa130dd50c57d53368c9d59395cb5526eda596d3ffe36666cd81a44d56e48872
     # via jinja2
-mistune==0.8.4 \
-    --hash=sha256:59a3429db53c50b5c6bcc8a07f8848cb00d7dc8bdb431a4ab41920d201d4756e \
-    --hash=sha256:88a1051873018da288eee8538d476dffe1262495144b33ecb586c4ab266bb8d4
+mistune==2.0.3 \
+    --hash=sha256:d7605b46b6156b53b7d52a465202b29a6f00f4ea4130ad5d25e9d5547d6b7e50 \
+    --hash=sha256:e3964140c0775535fba50bd616fe180920044a64bc21850253267b07bff89924
     # via flasgger
 numpy==1.21.2 \
     --hash=sha256:09858463db6dd9f78b2a1a05c93f3b33d4f65975771e90d2cf7aadb7c2f66edf \
@@ -263,7 +263,7 @@ numpy==1.21.2 \
     --hash=sha256:e42029e184008a5fd3d819323345e25e2337b0ac7f5c135b7623308530209d57 \
     --hash=sha256:f545c082eeb09ae678dd451a1b1dbf17babd8a0d7adea02897a76e639afca310 \
     --hash=sha256:fde50062d67d805bc96f1a9ecc0d37bfc2a8f02b937d2c50824d186aa91f2419
-    # via -r requirements/main.in
+    # via -r main.in
 prompt-toolkit==3.0.20 \
     --hash=sha256:6076e46efae19b1e0ca1ec003ed37a933dc94b4d20f486235d436e64771dcd5c \
     --hash=sha256:eb71d5a6b72ce6db177af4a7d4d7085b99756bf656d98ffcc4fecd36850eea6c
@@ -275,7 +275,7 @@ pyjwt==1.4.2 \
 pymysql==1.0.2 \
     --hash=sha256:41fc3a0c5013d5f039639442321185532e3e2c8924687abe6537de157d403641 \
     --hash=sha256:816927a350f38d56072aeca5dfb10221fe1dc653745853d30a216637f5d7ad36
-    # via -r requirements/main.in
+    # via -r main.in
 pyrsistent==0.18.0 \
     --hash=sha256:097b96f129dd36a8c9e33594e7ebb151b1515eb52cceb08474c10a5479e799f2 \
     --hash=sha256:2aaf19dc8ce517a8653746d98e962ef480ff34b6bc563fc067be6401ffb457c7 \
@@ -347,7 +347,7 @@ redis==3.5.3 \
 requests==2.26.0 \
     --hash=sha256:6c1246513ecd5ecd4528a0906f910e8f0f9c6b8ec72030dc9fd154dc1a6efd24 \
     --hash=sha256:b8aa58f8cf793ffd8782d3d8cb19e66ef36f7aba4353eec859e74678b01b07a7
-    # via -r requirements/main.in
+    # via -r main.in
 s3transfer==0.5.0 \
     --hash=sha256:50ed823e1dc5868ad40c8dc92072f757aa0e653a192845c94a3b676f4a62da4c \
     --hash=sha256:9c1dc369814391a6bda20ebbf4b70a0f34630592c9aa520856bf384916af2803
@@ -401,7 +401,7 @@ urllib3==1.26.6 \
     #   requests
 uwsgi==2.0.19.1 \
     --hash=sha256:faa85e053c0b1be4d5585b0858d3a511d2cd10201802e8676060fd0a109e5869
-    # via -r requirements/main.in
+    # via -r main.in
 vine==5.0.0 \
     --hash=sha256:4c9dceab6f76ed92105027c49c823800dd33cacce13bdedc5b914e3514b7fb30 \
     --hash=sha256:7d3b1624a953da82ef63462013bbd271d3eb75751489f9807598e8f340bd637e
