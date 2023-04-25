@@ -32,7 +32,6 @@ class Transformer(Formatter):
     """
 
     def __init__(self, squash_api_url, data):
-
         super().__init__(squash_api_url=squash_api_url)
 
         self.squash_api_url = squash_api_url
@@ -103,7 +102,6 @@ class Transformer(Formatter):
         logger.debug(f"Using timestamp from the job {timestamp}.")
 
         if self.data["meta"]["env"]["env_name"] == "jenkins":
-
             ci_id = self.data["meta"]["env"]["ci_id"]
             ci_name = self.data["meta"]["env"]["ci_name"]
 
@@ -164,7 +162,6 @@ class Transformer(Formatter):
 
         # Add ci_name until DM-18599 is not implemented
         if "ci_url" in self.data["meta"]["env"].keys():
-
             if "validate_drp_gen3" in self.data["meta"]["env"]["ci_url"]:
                 self.data["meta"]["env"]["ci_name"] = "validate_drp_gen3"
             elif "validate_drp" in self.data["meta"]["env"]["ci_url"]:

@@ -95,7 +95,6 @@ class Specification(Resource):
         if metric:
             metric_id = metric.id
         else:
-
             message = (
                 "Metric `{}` not found. You must provide a valid "
                 "name for the metric associated with this "
@@ -105,7 +104,6 @@ class Specification(Resource):
             return {"message": message}, 404
 
         if SpecificationModel.find_by_name(name):
-
             message = (
                 "A specification with name `{}` already " "exist.".format(name)
             )

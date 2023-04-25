@@ -261,7 +261,6 @@ class MetricList(Resource):
         metrics = MetricList.parser.parse_args()["metrics"]
 
         for data in metrics:
-
             name = data["name"]
 
             if "." in name:
@@ -283,7 +282,6 @@ class MetricList(Resource):
             try:
                 metric.save_to_db()
             except Exception as error:
-
                 message = "An error occurred inserting metric " "`{}`.".format(
                     name
                 )
