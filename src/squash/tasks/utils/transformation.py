@@ -121,12 +121,14 @@ class Transformer(Formatter):
             except HTTPError:
                 message = "Could not get timestamp from Jenkins."
                 logger.error(message)
+                raise
             except ConnectionError:
                 message = (
                     f"Failed to establish connection with Jenkins "
                     f"{jenkins_url}."
                 )
                 logger.error(message)
+                raise
 
             date_created = r.json()["date_created"]
             timestamp = Formatter.format_timestamp(date_created)
