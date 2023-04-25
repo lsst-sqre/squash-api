@@ -218,11 +218,6 @@ class MetricList(Resource):
         ---
         tags:
           - Metrics
-        parameters:
-          - name: package
-            in: url
-            type: string
-            description: Name of the verification package to filter
         responses:
           200:
             description: List of metrics successfully retrieved.
@@ -230,22 +225,8 @@ class MetricList(Resource):
 
         queryset = MetricModel.query
 
-        args = self.parser.parse_args()
-
-        package = args["package"]
-
-        if package:
-            queryset = queryset.filter(MetricModel.package == package)
-
-        return {
-            "metrics": [
-                metric.json()
-                for metric in queryset.options(
-                    noload(MetricModel.measurement),
-                    noload(MetricModel.specification),
-                ).all()
-            ]
-        }
+        generator = queryset.values()
+        return {"metrics": [value for value in generator]}
 
     @jwt_required()
     def post(self):
