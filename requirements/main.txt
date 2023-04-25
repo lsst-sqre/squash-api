@@ -149,15 +149,10 @@ click-repl==0.2.0 \
     --hash=sha256:94b3fbbc9406a236f176e0506524b2937e4b23b6f4c0c0b2a0a83f8a64e9194b \
     --hash=sha256:cd12f68d745bf6151210790540b4cb064c7b13e571bc64b6957d98d120dacfd8
     # via celery
-flasgger==0.9.5 \
-    --hash=sha256:0603941cf4003626b4ee551ca87331f1d17b8eecce500ccf1a1f1d3a332fc94a \
-    --hash=sha256:6ebea406b5beecd77e8da42550f380d4d05a6107bc90b69ce9e77aee7612e2d0
-    # via -r requirements/main.in
 flask==2.3.1 \
     --hash=sha256:8ba2a854608fdd603b67dccd4514a46450132227fb9df40127a8d0c1de8769ec \
     --hash=sha256:a6059db4297106e5a64b3215fa16ae641822c1cb97ecb498573549b2478602cb
     # via
-    #   flasgger
     #   flask-jwt
     #   flask-restful
     #   flask-sqlalchemy
@@ -199,9 +194,7 @@ jmespath==1.0.1 \
 jsonschema==3.2.0 \
     --hash=sha256:4e5b3cf8216f577bee9ce139cbe72eca3ea4f292ec60928ff24758ce626cd163 \
     --hash=sha256:c8a85b28d377cc7737e46e2d9f2b4f44ee3c0e1deac6bf46ddefc7187d30797a
-    # via
-    #   -r requirements/main.in
-    #   flasgger
+    # via -r requirements/main.in
 kombu==5.2.4 \
     --hash=sha256:37cee3ee725f94ea8bb173eaab7c1760203ea53bbebae226328600f9d2799610 \
     --hash=sha256:8b213b24293d3417bcf0d2f5537b7f756079e3ea232a8386dcc89a59fd2361a4
@@ -260,10 +253,6 @@ markupsafe==2.1.2 \
     # via
     #   jinja2
     #   werkzeug
-mistune==2.0.5 \
-    --hash=sha256:0246113cb2492db875c6be56974a7c893333bf26cd92891c85f63151cee09d34 \
-    --hash=sha256:bad7f5d431886fcbaf5f758118ecff70d31f75231b34024a1341120340a65ce8
-    # via flasgger
 numpy==1.24.3 \
     --hash=sha256:0ec87a7084caa559c36e0a2309e4ecb1baa03b687201d0a847c8b0ed476a7187 \
     --hash=sha256:1a7d6acc2e7524c9955e5c903160aa4ea083736fde7e91276b0e5d98e6332812 \
@@ -375,9 +364,7 @@ pyyaml==5.4.1 \
     --hash=sha256:fd7f6999a8070df521b6384004ef42833b9bd62cfee11a09bda1079b4b704247 \
     --hash=sha256:fdc842473cd33f45ff6bce46aea678a54e3d21f1b61a7750ce3c498eedfe25d6 \
     --hash=sha256:fe69978f3f768926cfa37b867e3843918e012cf83f680806599ddce33c2c68b0
-    # via
-    #   -r requirements/main.in
-    #   flasgger
+    # via -r requirements/main.in
 redis==4.5.4 \
     --hash=sha256:2c19e6767c474f2e85167909061d525ed65bea9301c0770bb151e041b7ac89a2 \
     --hash=sha256:73ec35da4da267d6847e47f68730fdd5f62e2ca69e3ef5885c6a78a9374c3893
@@ -395,7 +382,6 @@ six==1.16.0 \
     --hash=sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254
     # via
     #   click-repl
-    #   flasgger
     #   flask-restful
     #   jsonschema
     #   python-dateutil

@@ -89,7 +89,7 @@ exclude = '''
 include_trailing_comma = true
 multi_line_output = 3
 known_first_party = ["squash-api", "tests"]
-known_third_party = ["boto3", "botocore", "celery", "dateutil", "flasgger", "flask", "flask_jwt", "flask_restful", "flask_sqlalchemy", "numpy", "pymysql", "pytest", "pytz", "redis", "requests", "setuptools", "sqlalchemy", "werkzeug", "yaml"]
+known_third_party = ["boto3", "botocore", "celery", "dateutil", "flask", "flask_jwt", "flask_restful", "flask_sqlalchemy", "pymysql", "pytest", "pytz", "redis", "requests", "setuptools", "sqlalchemy", "werkzeug", "yaml"]
 skip = ["docs/conf.py"]
 
 [tool.pytest.ini_options]

@@ -52,17 +52,6 @@ class Config(object):
     # Secret key for signing cookies
     SECRET_KEY = os.environ.get("SECRET_KEY", os.urandom(32))
 
-    # Swagger configuration for the API documentation
-    SWAGGER = {
-        "title": "LSST SQuaSH API",
-        "description": "REST API for the LSST SQuaSH database."
-        "You can find out more about SQuaSH at "
-        "https://sqr-009.lsst.io",
-        "version": "1.0.0",
-        "termsOfService": None,
-        "uiversion": 3,
-    }
-
 
 class Production(Config):
     """Production configuration."""

@@ -131,9 +131,3 @@ def test_packages(test_client):
     """Test packages route."""
     response = test_client.get("packages")
     assert response.status_code == 200
-
-
-def test_apidocs(test_client):
-    """Test apidocs route."""
-    response = test_client.get("/apispec_1.json")
-    assert response.status_code == 200
