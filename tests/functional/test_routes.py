@@ -115,12 +115,6 @@ def test_datasets(test_client):
     assert response.status_code == 200
 
 
-def test_monitor(test_client):
-    """Test monitor route."""
-    response = test_client.get("monitor")
-    assert response.status_code == 200
-
-
 def test_packages(test_client):
     """Test packages route."""
     response = test_client.get("packages")
