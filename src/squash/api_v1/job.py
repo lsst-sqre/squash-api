@@ -169,8 +169,8 @@ class Job(Resource):
         try:
             task = job_to_influxdb.delay(job_id)
         except ApiError:
-            app.logger.error(meassage)
-            return {"message": meassage}, status_code
+            app.logger.error(message)
+            return {"message": message}, err.status_code
 
         # see DM-16391 for improving task status report
         message = "Request for creating Job `{}` received".format(job_id)

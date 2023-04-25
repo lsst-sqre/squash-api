@@ -3,13 +3,12 @@ from flask_restful import Resource
 
 
 class Root(Resource):
-    """ Lookup for resource URLs. """
+    """Lookup for resource URLs."""
 
     def external_url(self, endpoint):
         return url_for(endpoint, _external=True)
 
     def get(self):
-
         # List of resources we want in the API root
         endpoints = [
             "jenkins",
