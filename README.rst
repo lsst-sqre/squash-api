@@ -45,7 +45,7 @@ To run the app locally you need a local instances of MySQL, Redis, InfluxDB and 
 
 .. code-block::
 
- docker-compose up
+ docker-compose up -d
 
 The SQuaSH API requires the `AWS credentials present in the environment <https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html>`_. It also assumes that the `s3://squash-dev.data/` S3 bucket was previously created.
 
@@ -57,7 +57,7 @@ Note that by default the app will run using the development config profile, whic
  flask run
 
 
-The app will run at http://localhost:5000
+The app will run at http://127.0.0.1:5000
 
 On another terminal start the Celery worker:
 
