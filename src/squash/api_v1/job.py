@@ -9,7 +9,6 @@ from flask_restful import Resource, reqparse
 from squash.decorators import time_this
 from squash.error import ApiError
 from squash.tasks.influxdb import job_to_influxdb
-from squash.tasks.s3 import get_s3_uri, upload_object
 
 from ..models import (
     BlobModel,
@@ -162,21 +161,6 @@ class Job(Resource):
 
         try:
             self.insert_measurements(job_id)
-        except ApiError as err:
-            app.logger.error(err.message)
-            return {"message": err.message}, err.status_code
-
-        # async task
-        try:
-            self.upload_blobs_to_s3()
-        except ApiError as err:
-            app.logger.error(err.message)
-            return {"message": err.message}, err.status_code
-
-        # async, the status of the job upload task can be accessed
-        # from the /status resource
-        try:
-            task = self.upload_job_to_s3(job_id)
         except ApiError as err:
             app.logger.error(err.message)
             return {"message": err.message}, err.status_code
@@ -343,67 +327,6 @@ class Job(Resource):
                     "the metrics definition is out of "
                     "date.".format(metric_name)
                 )
-
-    @time_this
-    def upload_job_to_s3(self, job_id):
-        """Upload job document to S3 and register the S3 URI
-        location.
-
-        Parameters
-        ----------
-        job_id : `int`
-            id of the job object previously created
-        """
-        key = str(job_id)
-        body = json.dumps(self.data)
-
-        # async celery task
-        task = upload_object.delay(key, body)
-
-        # update the s3_uri field
-        job = JobModel.find_by_id(job_id)
-        job.s3_uri = get_s3_uri(key)
-        try:
-            job.save_to_db()
-        except Exception:
-            raise ApiError(
-                "An error occurred registering " "the S3 URI location.", 500
-            )
-
-        return task
-
-    @time_this
-    def upload_blobs_to_s3(self):
-
-        blobs = self.data["blobs"]
-
-        for blob in blobs:
-            if (
-                blob
-                and "identifier" in blob
-                and "data" in blob
-                and "name" in blob
-            ):
-                identifier = blob["identifier"]
-                data = json.dumps(blob["data"])
-                metadata = {"name": blob["name"]}
-
-                # async celery task
-                upload_object.delay(identifier, data, metadata)
-
-                # update the s3_uri field
-                saved_blobs = BlobModel.find_by_identifier(identifier)
-
-                for saved_blob in saved_blobs:
-                    saved_blob.s3_uri = get_s3_uri(identifier)
-                    try:
-                        saved_blob.save_to_db()
-                    except Exception:
-                        raise ApiError(
-                            "An error ocurred registering "
-                            "the S3 URI location.",
-                            500,
-                        )
 
 
 class JobList(Resource):

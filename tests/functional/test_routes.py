@@ -103,12 +103,6 @@ def test_version(test_client):
     assert response.status_code == 200
 
 
-def test_blob(test_client):
-    """Test blob route."""
-    response = test_client.get("blob")
-    assert response.status_code == 404
-
-
 def test_code_changes(test_client):
     """Test code_changes route."""
     response = test_client.get("code_changes")
