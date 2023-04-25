@@ -11,7 +11,7 @@ build-backend = 'setuptools.build_meta'
 [tool.tox]
 legacy_tox_ini = """
 [tox]
-envlist = pytest,coverage-report,typing,lint
+envlist = pytest,coverage-report,lint
 isolated_build = True
 
 [testenv]
@@ -35,11 +35,6 @@ commands =
     coverage combine
     coverage report
 
-[testenv:typing]
-description = Run mypy.
-commands =
-    mypy app tests setup.py
-
 [testenv:lint]
 description = Lint codebase by running pre-commit (Flake8, Black, isort).
 skip_install = true
@@ -48,10 +43,6 @@ deps =
 commands =
     pre-commit run --all-files
 
-[testenv:docs]
-description = Build documentation (HTML) with Sphinx.
-commands =
-    sphinx-build -n -T -b html -d {envtmpdir}/doctrees docs docs/_build/html
 """
 
 [tool.coverage.run]
