@@ -27,7 +27,6 @@ status_code
 # Transform jobs to InfluxDB line protocol format.
 influxdb_lines = []
 for id in ids:
-
     data = requests.get(SQUASH_API_URL + "/job/{}".format(id)).json()
 
     dataset = data["ci_dataset"]
