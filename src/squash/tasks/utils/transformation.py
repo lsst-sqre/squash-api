@@ -13,7 +13,6 @@ import urllib.parse
 import numpy as np
 import requests
 import yaml
-from requests.exceptions import ConnectionError, HTTPError
 
 from squash.tasks.utils.format import Formatter
 
@@ -110,23 +109,13 @@ class Transformer(Formatter):
                 return timestamp
 
             # Get timestamp from Jenkins
-            jenkins_url = (
-                f"{self.squash_api_url}/jenkins/{ci_id}?ci_name={ci_name}"
-            )
+            jenkins_url = f"{self.squash_api_url}/jenkins/{ci_id}"
             try:
                 r = requests.get(jenkins_url)
                 r.raise_for_status()
-            except HTTPError:
-                message = "Could not get timestamp from Jenkins."
-                logger.error(message)
-                raise
-            except ConnectionError:
-                message = (
-                    f"Failed to establish connection with Jenkins "
-                    f"{jenkins_url}."
-                )
-                logger.error(message)
-                raise
+            except requests.exceptions.RequestException as err:
+                message = f"Failed to establish connection with {jenkins_url}."
+                logger.error(message, err)
 
             date_created = r.json()["date_created"]
             timestamp = Formatter.format_timestamp(date_created)
