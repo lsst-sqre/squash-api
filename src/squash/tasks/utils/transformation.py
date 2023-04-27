@@ -7,10 +7,10 @@ the resulting InfluxDB data model.
 __all__ = ["Transformer"]
 
 import logging
-import math
 import pathlib
 import urllib.parse
 
+import numpy as np
 import requests
 import yaml
 from requests.exceptions import ConnectionError, HTTPError
@@ -246,10 +246,8 @@ class Transformer(Formatter):
                     metric = meas["metric"][len(package) + 1 :]
 
                 value = meas["value"]
-                # InfluxDB does not store NaNs and it is safe to just skip
-                # values that are NaN.
-                # https://github.com/influxdata/influxdb/issues/4089
-                if not math.isnan(value):
+                # Skip None, np.nan and np.inf value
+                if value is not None and np.isfinite(value):
                     if package not in meas_by_package:
                         meas_by_package[package] = []
                     meas_by_package[package].append(f"{metric}={value}")
