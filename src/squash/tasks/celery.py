@@ -11,6 +11,6 @@ CELERY_BROKER_URL = os.environ.get(
     "CELERY_BROKER_URL", "redis://localhost:6379"
 )
 
-celery = Celery(
+squash_tasks = Celery(
     "squash.tasks", backend=CELERY_BROKER_URL, broker=CELERY_BROKER_URL
 )

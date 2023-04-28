@@ -12,10 +12,10 @@ flask-jwt
 flask-sqlalchemy
 requests
 pymysql
-jsonschema
-flasgger
+jsonschema==3.2.0
 numpy
 uWSGI
 click
 boto3
 celery[redis]
+pyyaml==5.4.1

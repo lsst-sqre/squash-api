@@ -11,9 +11,8 @@ import logging
 import os
 
 import requests
-from requests.exceptions import ConnectionError, HTTPError
 
-from .celery import celery
+from .celery import squash_tasks
 from .utils.transformation import Transformer
 
 profile = os.environ.get("SQUASH_API_PROFILE", "squash.config.Development")
@@ -60,17 +59,18 @@ def create_influxdb_database(
         "p": influxdb_password,
     }
 
+    status_code = 500
     try:
         r = requests.post(url=f"{influxdb_api_url}/query", params=params)
         r.raise_for_status()
-    except HTTPError:
-        message = f"Could not create InfluxDB database {influxdb_database}."
-        logger.error(message)
-    except ConnectionError:
-        message = f"Failed to establish connection with {influxdb_api_url}."
+        status_code = r.status_code
+    except requests.exceptions.RequestException as err:
+        message = (
+            f"Could not create InfluxDB database {influxdb_database}.\n{err}"
+        )
         logger.error(message)
 
-    return r.status_code
+    return status_code
 
 
 def write_influxdb_line(
@@ -103,20 +103,19 @@ def write_influxdb_line(
     }
 
     url = f"{influxdb_api_url}/write"
+    status_code = 500
     try:
         r = requests.post(url=url, params=params, data=line)
         r.raise_for_status()
-    except HTTPError:
-        message = f"Could not write line to InfluxDB {line}."
-        logger.error(message)
-    except ConnectionError:
-        message = f"Failed to establish connection with {influxdb_api_url}."
+        status_code = r.status_code
+    except requests.exceptions.RequestException as err:
+        message = f"Could not write line to InfluxDB {line}.\n{err}"
         logger.error(message)
 
-    return r.status_code
+    return status_code
 
 
-@celery.task(bind=True)
+@squash_tasks.task(bind=True)
 def job_to_influxdb(self, job_id):
     """Transform a SQuaSH job into InfluxDB lines and send to InfluxDB.
 
@@ -139,25 +138,23 @@ def job_to_influxdb(self, job_id):
 
     if status_code != 200:
         message = "Could not create InfluxDB database."
-        return message, status_code
+        return {"message": message, "status_code": status_code}
 
     # Get job data from the SQuaSH API
     job_url = f"{config.SQUASH_API_URL}/job/{job_id}"
+    status_code = 500
     try:
         r = requests.get(url=job_url)
         r.raise_for_status()
-    except HTTPError:
-        message = f"Could not get job {job_id} from the SQuaSH API."
-        logger.error(message)
-    except ConnectionError:
-        message = f"Failed to establish connection with {job_url}."
-        logger.error(message)
-
-    status_code = r.status_code
+        status_code = r.status_code
+    except requests.exceptions.RequestException as err:
+        message = (
+            f"Failed to establish connection with {config.SQUASH_API_URL}."
+        )
+        logger.error(message, err)
 
     if status_code != 200:
-        message = f"Could not get job {job_id} from the SQuaSH API."
-        return message, status_code
+        return {"message": message, "status_code": status_code}
 
     data = r.json()
     transformer = Transformer(squash_api_url=config.SQUASH_API_URL, data=data)
@@ -170,8 +167,8 @@ def job_to_influxdb(self, job_id):
         )
 
         if status_code != 204:
-            message = f"Error writing job {job_id} to InfluxDB."
-            return message, status_code
+            message = f"Failed to write Job {job_id} to InfluxDB."
+            return {"message": message, "status_code": status_code}
 
     message = f"Job {job_id} sucessfully written to InfluxDB."
-    return message, status_code
+    return {"message": message, "status_code": status_code}

@@ -41,7 +41,7 @@ class Config(object):
     INFLUXDB_PASSWORD = os.environ.get("INFLUXDB_PASSWORD")
 
     # SQuaSH API URL
-    SQUASH_API_URL = os.environ.get("SQUASH_API_URL", "http://localhost:5000")
+    SQUASH_API_URL = os.environ.get("SQUASH_API_URL", "http://127.0.0.1:5000")
 
     # Turn off the Flask-SQLAlchemy event system
     SQLALCHEMY_TRACK_MODIFICATIONS = False
@@ -51,17 +51,6 @@ class Config(object):
 
     # Secret key for signing cookies
     SECRET_KEY = os.environ.get("SECRET_KEY", os.urandom(32))
-
-    # Swagger configuration for the API documentation
-    SWAGGER = {
-        "title": "LSST SQuaSH API",
-        "description": "REST API for the LSST SQuaSH database."
-        "You can find out more about SQuaSH at "
-        "https://sqr-009.lsst.io",
-        "version": "1.0.0",
-        "termsOfService": None,
-        "uiversion": 3,
-    }
 
 
 class Production(Config):

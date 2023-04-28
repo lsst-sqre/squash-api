@@ -103,12 +103,6 @@ def test_version(test_client):
     assert response.status_code == 200
 
 
-def test_blob(test_client):
-    """Test blob route."""
-    response = test_client.get("blob")
-    assert response.status_code == 404
-
-
 def test_code_changes(test_client):
     """Test code_changes route."""
     response = test_client.get("code_changes")
@@ -121,19 +115,7 @@ def test_datasets(test_client):
     assert response.status_code == 200
 
 
-def test_monitor(test_client):
-    """Test monitor route."""
-    response = test_client.get("monitor")
-    assert response.status_code == 200
-
-
 def test_packages(test_client):
     """Test packages route."""
     response = test_client.get("packages")
-    assert response.status_code == 200
-
-
-def test_apidocs(test_client):
-    """Test apidocs route."""
-    response = test_client.get("/apispec_1.json")
     assert response.status_code == 200

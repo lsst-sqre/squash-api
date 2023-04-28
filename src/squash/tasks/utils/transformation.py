@@ -13,7 +13,6 @@ import urllib.parse
 import numpy as np
 import requests
 import yaml
-from requests.exceptions import ConnectionError, HTTPError
 
 from squash.tasks.utils.format import Formatter
 
@@ -32,7 +31,6 @@ class Transformer(Formatter):
     """
 
     def __init__(self, squash_api_url, data):
-
         super().__init__(squash_api_url=squash_api_url)
 
         self.squash_api_url = squash_api_url
@@ -103,7 +101,6 @@ class Transformer(Formatter):
         logger.debug(f"Using timestamp from the job {timestamp}.")
 
         if self.data["meta"]["env"]["env_name"] == "jenkins":
-
             ci_id = self.data["meta"]["env"]["ci_id"]
             ci_name = self.data["meta"]["env"]["ci_name"]
 
@@ -112,21 +109,13 @@ class Transformer(Formatter):
                 return timestamp
 
             # Get timestamp from Jenkins
-            jenkins_url = (
-                f"{self.squash_api_url}/jenkins/{ci_id}?ci_name={ci_name}"
-            )
+            jenkins_url = f"{self.squash_api_url}/jenkins/{ci_id}"
             try:
                 r = requests.get(jenkins_url)
                 r.raise_for_status()
-            except HTTPError:
-                message = "Could not get timestamp from Jenkins."
-                logger.error(message)
-            except ConnectionError:
-                message = (
-                    f"Failed to establish connection with Jenkins "
-                    f"{jenkins_url}."
-                )
-                logger.error(message)
+            except requests.exceptions.RequestException as err:
+                message = f"Failed to establish connection with {jenkins_url}."
+                logger.error(message, err)
 
             date_created = r.json()["date_created"]
             timestamp = Formatter.format_timestamp(date_created)
@@ -162,7 +151,6 @@ class Transformer(Formatter):
 
         # Add ci_name until DM-18599 is not implemented
         if "ci_url" in self.data["meta"]["env"].keys():
-
             if "validate_drp_gen3" in self.data["meta"]["env"]["ci_url"]:
                 self.data["meta"]["env"]["ci_name"] = "validate_drp_gen3"
             elif "validate_drp" in self.data["meta"]["env"]["ci_url"]:

@@ -119,7 +119,6 @@ class MetricModel(db.Model):
         tags=None,
         reference=None,
     ):
-
         self.name = name
         self.package = package
         self.display_name = display_name
@@ -191,7 +190,6 @@ class SpecificationModel(db.Model):
         metadata_query=None,
         type=None,
     ):
-
         self.name = name
         self.metric_id = metric_id
         self.threshold = threshold
@@ -301,7 +299,6 @@ class JobModel(db.Model):
     )
 
     def __init__(self, env_id, env, meta):
-
         self.env_id = env_id
         # FIXME: DM-14538 Remove ci_dataset from job model
         if "ci_dataset" in env:
@@ -392,7 +389,6 @@ class PackageModel(db.Model):
         git_branch=None,
         eups_version=None,
     ):
-
         self.job_id = job_id
         self.name = name
         self.git_sha = git_sha
@@ -477,7 +473,6 @@ class MeasurementModel(db.Model):
         identifier=None,
         blob_refs=None,
     ):
-
         self.job_id = job_id
         self.metric_id = metric_id
 

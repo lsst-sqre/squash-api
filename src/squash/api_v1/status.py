@@ -1,7 +1,7 @@
 from flask import jsonify
 from flask_restful import Resource
 
-from squash.tasks.s3 import upload_object
+from squash.tasks.influxdb import job_to_influxdb
 
 
 class Status(Resource):
@@ -20,26 +20,33 @@ class Status(Resource):
         responses:
           200:
             description: >
-                Upload task status successfully retrieved.
+                InfluxDB task status successfully retrieved.
                 PENDING: the task did not start yet.
                 STARTED: the task has started.
-                SUCCESS: the task has completed.
                 FAILURE: something went wrong.
+                On sucess report a message and status code for the request.
 
         """
-        task = upload_object.AsyncResult(task_id)
+        result = job_to_influxdb.AsyncResult(task_id)
 
-        if task.state == "PENDING":
-            # Upload task did not start yet
+        if result.state == "PENDING":
             response = {
-                "status": task.state,
+                "status": result.state,
             }
 
-        elif task.state != "FAILURE":
+        if result.state == "STARTED":
             response = {
-                "status": task.state,
+                "status": result.state,
+            }
+
+        elif result.state == "FAILURE":
+            response = {
+                "status": result.state,
             }
         else:
-            # Something went wrong in
-            response = {"status": task.state, "message": str(task.info)}
+            response = {
+                "message": result.info["message"],
+                "status_code": result.info["status_code"],
+            }
+
         return jsonify(response)

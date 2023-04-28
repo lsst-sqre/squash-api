@@ -95,7 +95,6 @@ class Specification(Resource):
         if metric:
             metric_id = metric.id
         else:
-
             message = (
                 "Metric `{}` not found. You must provide a valid "
                 "name for the metric associated with this "
@@ -105,7 +104,6 @@ class Specification(Resource):
             return {"message": message}, 404
 
         if SpecificationModel.find_by_name(name):
-
             message = (
                 "A specification with name `{}` already " "exist.".format(name)
             )
@@ -219,10 +217,6 @@ class Specification(Resource):
 class SpecificationList(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument("specs", type=dict, action="append")
-    parser.add_argument("metric")
-    parser.add_argument("dataset_name")
-    parser.add_argument("filter_name")
-    parser.add_argument("tag")
 
     def get(self):
         """
@@ -230,65 +224,12 @@ class SpecificationList(Resource):
         ---
         tags:
           - Metric Specifications
-        parameters:
-          - name: metric
-            in: url
-            type: string
-            description: >
-                A full qualified name for the Metric,
-                e.g `validate_drp.AM1`
-          - name: dataset_name
-            in: url
-            type: string
-            description: >
-                Name of the dataset as in the query metadata,
-                e.g `validation_data_cfht`
-          - name: filter_name
-            in: url
-            type: string
-            description: >
-                Name of the filter as in the query metadada,
-                e.g. `r`
-          - name: specification_tag
-            in: url
-            type: string
-            description: >
-                Name of the specification tag
-        responses:
-          200:
-            description: List of metric specifications successfully retrieved.
         """
 
         queryset = SpecificationModel.query.join(MetricModel)
-        args = self.parser.parse_args()
 
-        metric = args["metric"]
-        if metric:
-            queryset = queryset.filter(MetricModel.name == metric)
-
-        dataset_name = args["dataset_name"]
-        if dataset_name:
-            expr = (
-                SpecificationModel.metadata_query["dataset_name"]
-                == dataset_name
-            )
-            queryset = queryset.filter(expr)
-
-        filter_name = args["filter_name"]
-        if filter_name:
-            expr = (
-                SpecificationModel.metadata_query["filter_name"] == filter_name
-            )
-            queryset = queryset.filter(expr)
-
-        specification_tag = args["tag"]
-        if specification_tag:
-            expr = func.json_contains(
-                SpecificationModel.tags, '"{}"'.format(specification_tag)
-            )
-            queryset = queryset.filter(expr)
-
-        return {"specs": [spec.json() for spec in queryset.all()]}
+        generator = queryset.values()
+        return {"specs": [value for value in generator]}
 
     @jwt_required()
     def post(self):

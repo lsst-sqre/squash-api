@@ -1,7 +1,7 @@
 version: "3"
 services:
   redis:
-    image: redis:alpine
+    image: redis:6.0
     container_name: squash-api-redis
     command:
       - redis-server
@@ -9,7 +9,7 @@ services:
       - "6379:6379"
 
   mysql:
-    image: "mysql:5.7"
+    image: "mariadb:latest"
     container_name: squash-api-mysql
     ports:
       - "3306:3306"
@@ -18,7 +18,7 @@ services:
       MYSQL_DATABASE: squash_local
 
   influxdb:
-    image: influxdb:1.8.3
+    image: influxdb:1.8.10
     container_name: squash-api-influxdb
     volumes:
       - ./data/influxdb:/var/lib/influxdb
@@ -28,7 +28,7 @@ services:
   # Run chronograf on a different port to avoid
   # collision with Jupyter server.
   chronograf:
-    image: chronograf:1.8.8
+    image: chronograf:1.9.4
     container_name: squash-api-chronograf
     environment:
       INFLUXDB_URL: http://influxdb:8086

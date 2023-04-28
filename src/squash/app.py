@@ -18,19 +18,16 @@ __all__ = ["create_app"]
 
 import os
 
-from flasgger import Swagger
 from flask import Flask
 from flask_jwt import JWT
 from flask_restful import Api
 
-from squash.api_v1.blob import Blob
 from squash.api_v1.code_changes import CodeChanges
 from squash.api_v1.dataset import DatasetList
 from squash.api_v1.jenkins import Jenkins
 from squash.api_v1.job import Job, JobList, JobWithArg
 from squash.api_v1.measurement import Measurement, MeasurementList
 from squash.api_v1.metric import Metric, MetricList
-from squash.api_v1.monitor import Monitor
 from squash.api_v1.package import PackageList
 from squash.api_v1.root import Root
 from squash.api_v1.specification import Specification, SpecificationList
@@ -81,19 +78,6 @@ def create_app(profile):
     # register api resources
     api = Api(app)
 
-    template = {
-        "tags": [
-            {"name": "Jobs"},
-            {"name": "Metrics"},
-            {"name": "Metric Specifications"},
-            {"name": "Metric Measurements"},
-            {"name": "Users"},
-            {"name": "Misc"},
-        ]
-    }
-    # Add api documentation
-    Swagger(app, template=template)
-
     # Redirect root url to api documentation
     api.add_resource(Root, "/")
 
@@ -108,9 +92,6 @@ def create_app(profile):
     # https://github.com/rochacbruno/flasgger/issues/174
     api.add_resource(JobWithArg, "/job/<int:job_id>", endpoint="jobwitharg")
     api.add_resource(JobList, "/jobs", endpoint="jobs")
-
-    # Data blobs
-    api.add_resource(Blob, "/blob/<int:job_id>", endpoint="blob")
 
     # Resource for jobs in the jenkins enviroment
     api.add_resource(Jenkins, "/jenkins/<string:ci_id>", endpoint="jenkins")
@@ -138,7 +119,6 @@ def create_app(profile):
     api.add_resource(MeasurementList, "/measurements", endpoint="measurements")
 
     # Apps
-    api.add_resource(Monitor, "/monitor", endpoint="monitor")
     api.add_resource(DatasetList, "/datasets", endpoint="datasets")
     api.add_resource(PackageList, "/packages", endpoint="packages")
     api.add_resource(
